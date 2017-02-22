@@ -1,5 +1,7 @@
 //myschedule.cpp
 /*Define all the functions in 'myschedule.h' here.*/
+//Aiyu Cui, Rex Li, Weiming Shan
+
 #include "myscheduler.h"
 
 void MyScheduler::CreateThread(int arriving_time, int remaining_time, int priority, int tid) //Thread ID not Process ID
