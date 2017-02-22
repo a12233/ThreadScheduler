@@ -9,14 +9,9 @@
    which they might find helpful.*/
 
 #include "scheduler.h"
+#include <queue> 
 
-//Define your data structure here.
-	/*
-	*
-	*
-	*
-	*
-	*/
+std::priority_queue<ThreadDescriptorBlock> buffer; 
 
 class MyScheduler: public Scheduler {
 public:
