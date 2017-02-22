@@ -8,6 +8,13 @@ void MyScheduler::CreateThread(int arriving_time, int remaining_time, int priori
 {
 	//Function to Create Thread(s) and insert them in the student
 	//defined data structure
+	ThreadDescriptorBlock thread1;
+	
+	thread1.arriving_time = priority; //the order in which the threads arrive will be the index into our buffer
+	thread1.arriving_time = arriving_time;
+	thread1.remaining_time = remaining_time;
+	thread1.tid = tid;
+	buffer.push(thread1); //add to our priorty queue
 }
 
 bool MyScheduler::Dispatch()
@@ -16,8 +23,19 @@ bool MyScheduler::Dispatch()
 	//Todo: Check if all the threads are finished; if so, return false
 	switch(policy)
 	{
-		case FCFS:		//First Come First Serve
-
+		case FCFS:		//First Come First Serve, sort buffer in terms of arriving time
+			//when timer equals arrival time of first element, start
+			//when running element.remaingingTime is 0, start next element
+			MyThread temp; 
+			while (!buffer.empty)
+			{
+				temp = buffer.pop;
+				while (temp.arriving_time > timer)
+				{
+					timer++; 
+				}
+			}
+			return false; 
 			break;
 		case STRFwoP:	//Shortest Time Remaining First, without preemption
 

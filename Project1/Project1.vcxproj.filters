@@ -35,10 +35,10 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Project1.cpp">
+    <ClCompile Include="myscheduler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="myscheduler.cpp">
+    <ClCompile Include="testbench.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

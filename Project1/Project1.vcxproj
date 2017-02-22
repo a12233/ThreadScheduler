@@ -84,7 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="myscheduler.cpp" />
-    <ClCompile Include="Project1.cpp" />
+    <ClCompile Include="testbench.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

@@ -72,8 +72,6 @@ public:
 
 protected:
 	const Policy policy; //To denote the scheduling policy
-
-private:
 	unsigned int num_cpu; //To denote number of processors
 	ThreadDescriptorBlock **CPUs; //Pointer array to let processors access the threads
 	int timer; //Global Timer for all the processors, single increment in timer equals one cpu cycle.
