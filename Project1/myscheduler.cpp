@@ -23,7 +23,8 @@ bool MyScheduler::Dispatch()
 	//Todo: Check if all the threads are finished; if so, return false
 	switch(policy)
 	{
-		case FCFS:		//First Come First Serve, sort buffer in terms of arriving time
+		case FCFS:		//First Come First Serve
+
 			//when timer equals arrival time of first element, start
 			//when running element.remaingingTime is 0, start next element
 			MyThread temp; 
