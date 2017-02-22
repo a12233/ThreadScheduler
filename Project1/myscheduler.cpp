@@ -30,9 +30,14 @@ bool MyScheduler::Dispatch()
 			while (!buffer.empty)
 			{
 				temp = buffer.pop;
-				while (temp.arriving_time > timer)
+				while (temp.arriving_time > timer) //cpu stall
 				{
 					timer++; 
+				}
+				while (temp.arriving_time <= timer)//cpu ready to run
+				{
+					//for the number of processors, fill idle ones
+					//if all filled wait until a thread is complete
 				}
 			}
 			return false; 

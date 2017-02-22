@@ -14,7 +14,6 @@
 #include <time.h>       /* time */
 
 std::priority_queue<ThreadDescriptorBlock> buffer; 
-
 class MyThread : public ThreadDescriptorBlock {
 
 	bool operator<(MyThread const &other) { return arriving_time < other.arriving_time; }
