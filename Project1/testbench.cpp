@@ -18,6 +18,7 @@ int main(int argc, char* argv[])
 	{
 		Scheduler1.CreateThread(arrivingTime[i], remainingTime[i], priority[i], i); 
 	}
+	
 	Scheduler1.Go();
 	return 0;
 	

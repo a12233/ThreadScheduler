@@ -10,11 +10,12 @@ void MyScheduler::CreateThread(int arriving_time, int remaining_time, int priori
 	//defined data structure
 	ThreadDescriptorBlock thread1;
 	
-	thread1.arriving_time = priority; 
+	thread1.priority = priority; 
 	thread1.arriving_time = arriving_time;
 	thread1.remaining_time = remaining_time;
 	thread1.tid = tid;
 	buffer.push(thread1); //add to our priorty queue
+	
 }
 
 bool MyScheduler::Dispatch()
@@ -25,15 +26,17 @@ bool MyScheduler::Dispatch()
 	{
 		case FCFS:		//First Come First Serve
 			ThreadDescriptorBlock temp;
-			if (!buffer.empty())
+			while (!buffer.empty())
 			{
 				//whenever a cpu is open, pop a thread off the buffer and assign it to the cpu
 				for (unsigned int i = 0; i < num_cpu; i++)
 				{
 					if (CPUs[i] == NULL) {
+						CPUs[i] = new ThreadDescriptorBlock;
 						temp = buffer.top();
 						buffer.pop(); 
 						*CPUs[i] = temp;
+					
 					}
 				}
 				return true;
@@ -53,5 +56,5 @@ bool MyScheduler::Dispatch()
 			cout<<"Invalid policy!";
 			throw 0;
 	}
-	return true;
+	//return true;
 }
