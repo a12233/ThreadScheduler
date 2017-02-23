@@ -10,7 +10,7 @@ int main(int argc, char* argv[])
 	//flag = rand() % 100 + 1; //random number between 1 - 100 
 
 	int arrivingTime[5] = { 5, 7, 8, 1, 3 };
-	int remainingTime[5] = { 10, 15, 3, 8, 13 };
+	int remainingTime[5] = { 4, 8, 3, 5, 7 };
 	int priority[5] = { 4, 3, 3, 2, 1 };
 
 	MyScheduler Scheduler1(FCFS, 2);

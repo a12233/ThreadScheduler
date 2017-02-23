@@ -34,14 +34,26 @@ bool MyScheduler::Dispatch()
 					if (CPUs[i] == NULL) {
 						CPUs[i] = new ThreadDescriptorBlock;
 						temp = buffer.top();
-						buffer.pop(); 
+						buffer.pop();
 						*CPUs[i] = temp;
 					
 					}
+					
 				}
-				return true;
+				return true; //return control to scheduler.h and run threads
+				
 			}
-			return false; 
+			for (unsigned int i = 0; i < num_cpu; i++)
+			{
+				int counter = 0; //temp variable to check if all CPUs are done executing
+				if (CPUs[i]==NULL) {
+					counter++; 
+				}
+				if (counter == num_cpu) {
+					return false; 
+				}
+			}
+			
 			break;
 		case STRFwoP:	//Shortest Time Remaining First, without preemption
 
@@ -56,5 +68,5 @@ bool MyScheduler::Dispatch()
 			cout<<"Invalid policy!";
 			throw 0;
 	}
-	//return true;
+	return true;
 }
