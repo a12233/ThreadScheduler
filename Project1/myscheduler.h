@@ -13,12 +13,12 @@
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 
-struct MyThread : public ThreadDescriptorBlock {
+struct compare {
 
-	bool operator<(MyThread const &other) { return arriving_time < other.arriving_time; }
+	bool operator ()( const ThreadDescriptorBlock& a, const ThreadDescriptorBlock& b) { return a.arriving_time < b.arriving_time; }
 	
 };
-std::priority_queue<MyThread> buffer;
+priority_queue<ThreadDescriptorBlock, vector<ThreadDescriptorBlock>, compare> buffer;
 
 
 class MyScheduler: public Scheduler {

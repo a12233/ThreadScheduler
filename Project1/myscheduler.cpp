@@ -24,14 +24,18 @@ bool MyScheduler::Dispatch()
 	switch(policy)
 	{
 		case FCFS:		//First Come First Serve
-			MyThread temp;
-			while (!buffer.empty)
+			ThreadDescriptorBlock temp;
+			while (!buffer.empty())
 			{
 				//whenever a cpu is open, pop a thread off the buffer and assign it to the cpu
-				for (int i = 0; i < num_cpu; i++)
+				for (unsigned int i = 0; i < num_cpu; i++)
 				{
-					if (CPUs[i] == NULL)
-						CPUs[i] = buffer.pop;
+					if (CPUs[i] == NULL) {
+						temp = buffer.top();
+						buffer.pop(); 
+						*CPUs[i] = temp;
+
+					}
 				}
 			}
 			return false; 
