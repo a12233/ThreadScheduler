@@ -25,17 +25,20 @@ bool MyScheduler::Dispatch()
 	{
 		case FCFS:		//First Come First Serve
 			ThreadDescriptorBlock temp;
-			while (!buffer.empty())
+			
+			if (!buffer.empty())
 			{
 				//whenever a cpu is open, pop a thread off the buffer and assign it to the cpu
 				for (unsigned int i = 0; i < num_cpu; i++)
 				{
 					if (CPUs[i] == NULL) {
+						CPUs[i] = new ThreadDescriptorBlock;
 						temp = buffer.top();
 						buffer.pop(); 
 						*CPUs[i] = temp;
 					}
 				}
+				return true;
 			}
 			return false; 
 			break;

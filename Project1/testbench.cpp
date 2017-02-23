@@ -2,6 +2,7 @@
 //Aiyu Cui, Rex Li, Weiming Shan
 
 #include "myscheduler.h"
+#include <iostream>
 
 int main(int argc, char* argv[])
 {

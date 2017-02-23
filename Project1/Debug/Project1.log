@@ -1,6 +1,3 @@
-﻿  stdafx.cpp
-  testbench.cpp
-  myscheduler.cpp
-  Generating Code...
-testbench.obj : error LNK2005: "class std::priority_queue<struct ThreadDescriptorBlock,class std::vector<struct ThreadDescriptorBlock,class std::allocator<struct ThreadDescriptorBlock> >,struct compare> buffer" (?buffer@@3V?$priority_queue@UThreadDescriptorBlock@@V?$vector@UThreadDescriptorBlock@@V?$allocator@UThreadDescriptorBlock@@@std@@@std@@Ucompare@@@std@@A) already defined in myscheduler.obj
-C:\Users\lirex\Desktop\473\ThreadScheduler\Debug\Project1.exe : fatal error LNK1169: one or more multiply defined symbols found
+﻿  myscheduler.cpp
+  Project1.vcxproj -> E:\Repos\ThreadScheduler\Debug\Project1.exe
+  Project1.vcxproj -> E:\Repos\ThreadScheduler\Debug\Project1.pdb (Full PDB)
