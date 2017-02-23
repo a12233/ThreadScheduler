@@ -34,7 +34,6 @@ bool MyScheduler::Dispatch()
 						temp = buffer.top();
 						buffer.pop(); 
 						*CPUs[i] = temp;
-
 					}
 				}
 			}
