@@ -10,7 +10,7 @@ void MyScheduler::CreateThread(int arriving_time, int remaining_time, int priori
 	//defined data structure
 	ThreadDescriptorBlock thread1;
 	
-	thread1.arriving_time = priority; //the order in which the threads arrive will be the index into our buffer
+	thread1.arriving_time = priority; 
 	thread1.arriving_time = arriving_time;
 	thread1.remaining_time = remaining_time;
 	thread1.tid = tid;
@@ -24,21 +24,14 @@ bool MyScheduler::Dispatch()
 	switch(policy)
 	{
 		case FCFS:		//First Come First Serve
-
-			//when timer equals arrival time of first element, start
-			//when running element.remaingingTime is 0, start next element
-			MyThread temp; 
+			MyThread temp;
 			while (!buffer.empty)
 			{
-				temp = buffer.pop;
-				while (temp.arriving_time > timer) //cpu stall
+				//whenever a cpu is open, pop a thread off the buffer and assign it to the cpu
+				for (int i = 0; i < num_cpu; i++)
 				{
-					timer++; 
-				}
-				while (temp.arriving_time <= timer)//cpu ready to run
-				{
-					//for the number of processors, fill idle ones
-					//if all filled wait until a thread is complete
+					if (CPUs[i] == NULL)
+						CPUs[i] = buffer.pop;
 				}
 			}
 			return false; 

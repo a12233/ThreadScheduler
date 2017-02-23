@@ -1,3 +1,24 @@
-﻿  stdafx.cpp
-  testbench.cpp
+﻿  testbench.cpp
 c:\users\lirex\desktop\473\threadscheduler\project1\testbench.cpp(9): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  myscheduler.cpp
+c:\users\lirex\desktop\473\threadscheduler\project1\myscheduler.cpp(17): error C2664: 'void std::priority_queue<MyThread,std::vector<_Ty,std::allocator<_Ty>>,std::less<_Ty>>::push(const MyThread &)': cannot convert argument 1 from 'ThreadDescriptorBlock' to 'MyThread &&'
+          with
+          [
+              _Ty=MyThread
+          ]
+  c:\users\lirex\desktop\473\threadscheduler\project1\myscheduler.cpp(17): note: Reason: cannot convert from 'ThreadDescriptorBlock' to 'MyThread'
+  c:\users\lirex\desktop\473\threadscheduler\project1\myscheduler.cpp(17): note: No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+c:\users\lirex\desktop\473\threadscheduler\project1\myscheduler.cpp(28): error C2276: '!': illegal operation on bound member function expression
+c:\users\lirex\desktop\473\threadscheduler\project1\myscheduler.cpp(31): warning C4018: '<': signed/unsigned mismatch
+c:\users\lirex\desktop\473\threadscheduler\project1\myscheduler.cpp(34): error C3867: 'std::priority_queue<MyThread,std::vector<_Ty,std::allocator<_Ty>>,std::less<_Ty>>::pop': non-standard syntax; use '&' to create a pointer to member
+          with
+          [
+              _Ty=MyThread
+          ]
+c:\users\lirex\desktop\473\threadscheduler\project1\myscheduler.cpp(34): error C2440: '=': cannot convert from 'void (__thiscall std::priority_queue<MyThread,std::vector<_Ty,std::allocator<_Ty>>,std::less<_Ty>>::* )(void)' to 'ThreadDescriptorBlock *'
+          with
+          [
+              _Ty=MyThread
+          ]
+  c:\users\lirex\desktop\473\threadscheduler\project1\myscheduler.cpp(34): note: There is no context in which this conversion is possible
+  Generating Code...
