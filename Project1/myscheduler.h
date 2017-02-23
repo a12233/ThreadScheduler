@@ -16,8 +16,8 @@
 using namespace std;
 
 struct compare {
-	 bool operator()( const ThreadDescriptorBlock& a, const ThreadDescriptorBlock& b) const
-	 { return a.arriving_time < b.arriving_time; }
+public:
+	 bool operator()( const ThreadDescriptorBlock& a, const ThreadDescriptorBlock& b) { return a.arriving_time < b.arriving_time; }
 	
 };
 static priority_queue<ThreadDescriptorBlock, vector<ThreadDescriptorBlock>, compare> buffer;
