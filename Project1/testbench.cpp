@@ -18,13 +18,13 @@ int main(int argc, char* argv[])
 	
 	for (int i = 0; i < 5; i++) //5 threads
 	{
-		Scheduler1.CreateThread(arrivingTime[i], remainingTime[i], priority[i], i); 
-		//Scheduler2.CreateThread(arrivingTime[i], remainingTime[i], priority[i], i); 
+		//Scheduler1.CreateThread(arrivingTime[i], remainingTime[i], priority[i], i); 
+		Scheduler2.CreateThread(arrivingTime[i], remainingTime[i], priority[i], i); 
 
 	}
 	
-	Scheduler1.Go();
-	//Scheduler2.Go();
+	//Scheduler1.Go();
+	Scheduler2.Go();
 	return 0;
 	
 }

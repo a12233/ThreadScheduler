@@ -50,7 +50,7 @@ bool MyScheduler::Dispatch()
 				return true; //return control to scheduler.h and run threads
 
 			}
-			for (unsigned int i = 0; i < num_cpu; i++)
+			for (unsigned int i = 0; i < num_cpu; i++) //only executes when buffer is empty
 			{
 				counter = 0;
 				if (CPUs[i] == NULL) {
@@ -68,53 +68,78 @@ bool MyScheduler::Dispatch()
 			int counter = 0; //variable to check if all CPUs are done executing
 			int tempSize = 0; //remaining threads after cpu are initalliy filled 
 			int counter1 = 0; //to count the number of cpus unused 
+			int counterCPU = 0; 
+			int clk = timer;
+			bool flag = false; //to check if arrival time <=timer 
+			bool flag1 = false; //to check if CPUs are filled 
 			ThreadDescriptorBlock temp;
-			while (!buffer.empty() && counter1 < num_cpu) //FCFS until all CPUs are filled, then push remaining threads into bufferRT
+			
+			while (!buffer.empty() && threadControl == false) //FCFS until all CPUs are filled, then push remaining threads into bufferRT
 			{
+				temp = buffer.top();
+				if (temp.arriving_time <= clk)
+					flag = true;
 				for (unsigned int i = 0; i < num_cpu; i++)
 				{
-					if (CPUs[i] == NULL) {
+					if (CPUs[i] == NULL && flag == true) {
 						CPUs[i] = new ThreadDescriptorBlock;
 						temp = buffer.top();
 						buffer.pop();
 						*CPUs[i] = temp;
 						counter1++;
+						flag = false; 
 					}
 				}
+				for (unsigned int i = 0; i < num_cpu && threadControl == false; i++) { //determined if all CPU are initially filled
+					if (CPUs[i] != NULL)
+						counterCPU++;
+				}
+				if (counterCPU == num_cpu)
+					threadControl = true;
+				return true; //give scheduler.h control, increament timer by 1
 			}
-			tempSize = buffer.size();
-			for (int i = 0; i < tempSize; i++) //add remaining threads to bufferRT
+			
+
+			if (threadControl == true) 	//if all cpu are filled, push remaining threads into bufferRT, then FCFS on that buffer
+
 			{
-				temp = buffer.top();
-				buffer.pop();
-				bufferRT.push(temp);
-			}
-			while (!bufferRT.empty()) //FCFS for bufferRT, sorted by remaining time
-			{
-				for (unsigned int i = 0; i < num_cpu; i++)
+				tempSize = buffer.size();
+				for (int i = 0; i < tempSize; i++) //add remaining threads to bufferRT
 				{
-					if (CPUs[i] == NULL) {
-						CPUs[i] = new ThreadDescriptorBlock;
-						temp = buffer.top();
-						buffer.pop();
-						*CPUs[i] = temp;
+					temp = buffer.top();
+					buffer.pop();
+					bufferRT.push(temp);
+				}
+				while (!bufferRT.empty()) //FCFS for bufferRT, sorted by remaining time
+				{
+					temp = bufferRT.top();
+					if (temp.arriving_time <= clk) //only process threads that have "arrived"
+						flag = true;
+					for (unsigned int i = 0; i < num_cpu; i++)
+					{
+						if (CPUs[i] == NULL && flag == true) {
+							CPUs[i] = new ThreadDescriptorBlock;
+							temp = bufferRT.top();
+							bufferRT.pop();
+							*CPUs[i] = temp;
+							flag = false; 
+						}
 
 					}
+					return true; //return control to scheduler.h and run threads for one clk cycle
 
 				}
-				return true; //return control to scheduler.h and run threads for one clk cycle
-
-			}
-			for (unsigned int i = 0; i < num_cpu; i++) //check if CPUs are done
-			{
-				counter = 0; //temp variable to check if all CPUs are done executing
-				if (CPUs[i] == NULL) {
-					counter++;
+				for (unsigned int i = 0; i < num_cpu; i++) //check if CPUs are done, only executes when bufferRT is empty
+				{
+					counter = 0; //temp variable to check if all CPUs are done executing
+					if (CPUs[i] == NULL) {
+						counter++;
+					}
+					if (counter == num_cpu) {
+						return false;
+					}
 				}
-				if (counter == num_cpu) {
-					return false;
-				}
-			}
+			}			
 		}
 			break;
 		case STRFwP:	//Shortest Time Remaining First, with preemption
