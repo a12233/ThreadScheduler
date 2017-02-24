@@ -15,12 +15,19 @@
 #include <vector>
 using namespace std;
 
-struct compare {
+struct compareAT {
 public:
 	 bool operator()( const ThreadDescriptorBlock& a, const ThreadDescriptorBlock& b) { return a.arriving_time > b.arriving_time; }
 	
 };
-static priority_queue<ThreadDescriptorBlock, vector<ThreadDescriptorBlock>, compare> buffer;
+struct compareRT {
+public:
+	bool operator()(const ThreadDescriptorBlock& a, const ThreadDescriptorBlock& b) { return a.arriving_time > b.arriving_time; }
+
+};
+static priority_queue<ThreadDescriptorBlock, vector<ThreadDescriptorBlock>, compareAT> buffer;
+static priority_queue<ThreadDescriptorBlock, vector<ThreadDescriptorBlock>, compareRT> bufferRT;
+
 
 
 class MyScheduler: public Scheduler {

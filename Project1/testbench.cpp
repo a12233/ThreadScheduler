@@ -9,17 +9,22 @@ int main(int argc, char* argv[])
 	//srand(time(NULL));
 	//flag = rand() % 100 + 1; //random number between 1 - 100 
 
-	int arrivingTime[5] = { 5, 7, 8, 1, 3 };
+	int arrivingTime[5] = { 1, 3, 4, 2, 5 };
 	int remainingTime[5] = { 4, 8, 3, 5, 7 };
 	int priority[5] = { 4, 3, 3, 2, 1 };
 
 	MyScheduler Scheduler1(FCFS, 2);
+	MyScheduler Scheduler2(STRFwoP, 2);
+	
 	for (int i = 0; i < 5; i++) //5 threads
 	{
 		Scheduler1.CreateThread(arrivingTime[i], remainingTime[i], priority[i], i); 
+		//Scheduler2.CreateThread(arrivingTime[i], remainingTime[i], priority[i], i); 
+
 	}
 	
 	Scheduler1.Go();
+	//Scheduler2.Go();
 	return 0;
 	
 }
