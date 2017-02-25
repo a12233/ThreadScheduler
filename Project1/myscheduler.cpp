@@ -18,6 +18,8 @@ void MyScheduler::CreateThread(int arriving_time, int remaining_time, int priori
 	
 }
 
+
+
 bool MyScheduler::Dispatch()
 {
 	//Todo: Check and remove finished threads
@@ -143,15 +145,85 @@ bool MyScheduler::Dispatch()
 		}
 			break;
 		case STRFwP:	//Shortest Time Remaining First, with preemption
-		{
+		{/*
+			int clk = timer;
 
+			// Get the incoming thread
+			bool hasGetThread = false;
+			ThreadDescriptorBlock temp;
+			while (!hasGetThread) {
+				if (buffer.empty()) {
+					return;
+				}
+
+
+				// Find the longest remaining time among threads in CPUs
+				int longest_time = -1;
+				for (int i; i < num_cpu; i++) {
+					if (CPUs[i] != NULL) {
+						if (CPUs[i]->remaining_time > longest_time) {
+							longest_time = CPUs[i]->remaining_time;
+						}
+					}
+				}
+				//Compare the remaining time between the one found longest in CPU and the incoming one
+
+			}
+			*/
 		}
 			break;
-		case PBS:		//Priority Based Scheduling, with preemption
+		case PBS:		//Priority Based Scheduling, with preemption - AC
 		{
+			ThreadDescriptorBlock temp;
+			int lowestPriority;
+			int lowestCPU;
 
-		}
-			break;
+			// Return if finished
+			if (buffer.empty()) {
+				cout << "PBS: Buffer Empty!" << endl;
+				return true;
+			}
+
+			// Get Thread with highest priority among threads arrived
+			ThreadDescriptorBlock *tmpPtr;
+			tmpPtr = getHighestPriorityThread();
+			if (tmpPtr == nullptr) {
+				cout << "No thread incoming" << endl;
+				return true;
+			}
+
+			temp = *tmpPtr;
+			// Set directly, if any CPU free
+			int nextCPU = findNextAvailableCPU();
+			if (nextCPU != -1) {
+				CPUs[nextCPU] = &temp;
+				cout << "PBS: CPU #" << nextCPU << ": Thread " << temp.tid << endl;
+				return true;
+			}
+
+			// IF CPU not Free, check
+
+			// Find CPU with lowest priority thread
+			lowestPriority = CPUs[0]->priority;
+			lowestCPU = 0;
+			for (int i=0; i < num_cpu; i++) {
+				if (CPUs[i] != NULL) {
+					if (CPUs[i]->priority < lowestPriority) {
+						lowestPriority = CPUs[i]->priority;
+						lowestCPU = i;
+					}
+				}
+			}
+
+			// Compare thread with lowest priority in CPU and the incoming thread
+			if (lowestPriority < temp.priority) {
+				buffer.push(*CPUs[lowestCPU]);
+				CPUs[lowestCPU] = &temp;
+				cout << "PBS: CPU #" << lowestCPU << ": Thread " << temp.tid << endl;
+			}
+
+		}break;
+
 		default: 
 		{
 			cout << "Invalid policy!";
@@ -159,4 +231,46 @@ bool MyScheduler::Dispatch()
 		}
 	}
 	return true;
+}
+
+int MyScheduler::findNextAvailableCPU()
+{
+	for (int i = 0; i < num_cpu; i++) {
+		if (CPUs[i] == NULL) {return i;}
+	}
+	// If no CPU available, return -1
+	return -1;
+}
+
+ThreadDescriptorBlock *MyScheduler::getHighestPriorityThread() {
+	
+	// Pop out and return the thread arrived with highest priority
+	// This function cannot check whether the buffer is empty!
+
+	//Get all thread arrived
+	vector<ThreadDescriptorBlock> tmp;
+	while (buffer.top().arriving_time <= timer) {
+		tmp.push_back(buffer.top());
+		buffer.pop();
+	}
+
+	//Return the thread with the highest priority
+	if (tmp.empty()) { return nullptr; }
+
+	ThreadDescriptorBlock result = tmp.back();
+	tmp.pop_back();
+
+	while(!tmp.empty()) {
+		ThreadDescriptorBlock curr = tmp.back();
+		tmp.pop_back();
+
+		if (result.priority <= curr.priority) {
+			buffer.push(result);
+			result = curr;
+		}
+		else {
+			buffer.push(curr);
+		}
+	}
+	return (&result);
 }
