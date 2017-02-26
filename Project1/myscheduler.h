@@ -44,7 +44,6 @@ public:
 private: 
 	int findNextAvailableCPU();
 	ThreadDescriptorBlock *getHighestPriorityThread();
+	int MyScheduler::getCPUThreadLowestPriority();
 
-
-	
 };

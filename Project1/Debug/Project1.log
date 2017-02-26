@@ -1,3 +1,4 @@
 ﻿  myscheduler.cpp
-  Project1.vcxproj -> C:\Users\lirex\Desktop\473\ThreadScheduler\Debug\Project1.exe
-  Project1.vcxproj -> C:\Users\lirex\Desktop\473\ThreadScheduler\Debug\Project1.pdb (Full PDB)
+c:\users\aiyu\source\repos\threadscheduler2\project1\myscheduler.cpp(215): warning C4018: '<': signed/unsigned mismatch
+c:\users\aiyu\source\repos\threadscheduler2\project1\myscheduler.cpp(277): warning C4018: '<': signed/unsigned mismatch
+  Project1.vcxproj -> C:\Users\Aiyu\Source\Repos\ThreadScheduler2\Debug\Project1.exe

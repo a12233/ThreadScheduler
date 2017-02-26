@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
 
 	int arrivingTime[5] = { 1, 3, 4, 2, 5 };
 	int remainingTime[5] = { 4, 8, 3, 5, 7 };
-	int priority[5] = { 4, 3, 3, 2, 1 };
+	int priority[5] = { 1, 8, 4, 5, 1 };
 
 	MyScheduler Scheduler1(FCFS, 2);
 	MyScheduler Scheduler2(STRFwoP, 2);
