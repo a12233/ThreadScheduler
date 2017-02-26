@@ -16,18 +16,22 @@ int main(int argc, char* argv[])
 	MyScheduler Scheduler1(FCFS, 2);
 	MyScheduler Scheduler2(STRFwoP, 2);
 	MyScheduler Scheduler3(PBS, 2);
+	MyScheduler Scheduler4(STRFwP, 2);
 	
 	for (int i = 0; i < 5; i++) //5 threads
 	{
 		//Scheduler1.CreateThread(arrivingTime[i], remainingTime[i], priority[i], i); 
 		//Scheduler2.CreateThread(arrivingTime[i], remainingTime[i], priority[i], i); 
-		Scheduler3.CreateThread(arrivingTime[i], remainingTime[i], priority[i], i);
+		
+		//Scheduler3.CreateThread(arrivingTime[i], remainingTime[i], priority[i], i);
+		Scheduler4.CreateThread(arrivingTime[i], remainingTime[i], priority[i], i);
 
 	}
 	
 	//Scheduler1.Go();
 	//Scheduler2.Go();
-	Scheduler3.Go();
+	//Scheduler3.Go();
+	Scheduler4.Go();
 
 	return 0;
 	
