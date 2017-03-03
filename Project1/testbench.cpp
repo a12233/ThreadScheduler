@@ -23,15 +23,15 @@ int main(int argc, char* argv[])
 		//Scheduler1.CreateThread(arrivingTime[i], remainingTime[i], priority[i], i); 
 		//Scheduler2.CreateThread(arrivingTime[i], remainingTime[i], priority[i], i); 
 		
-		//Scheduler3.CreateThread(arrivingTime[i], remainingTime[i], priority[i], i);
-		Scheduler4.CreateThread(arrivingTime[i], remainingTime[i], priority[i], i);
+		Scheduler3.CreateThread(arrivingTime[i], remainingTime[i], priority[i], i);
+		//Scheduler4.CreateThread(arrivingTime[i], remainingTime[i], priority[i], i);
 
 	}
 	
 	//Scheduler1.Go();
 	//Scheduler2.Go();
-	//Scheduler3.Go();
-	Scheduler4.Go();
+	Scheduler3.Go();
+	//Scheduler4.Go();
 
 	return 0;
 	

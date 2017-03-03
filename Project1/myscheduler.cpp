@@ -287,7 +287,7 @@ ThreadDescriptorBlock *MyScheduler::getHighestPriorityThread() {
 	// Get all threads arrived before timer
 	while (!buffer.empty()) {
 		curr = buffer.top();
-		if (curr.arriving_time >= timer) break;
+		if (curr.arriving_time > timer) break;
 		buffer.pop();
 		threads_tmp.push_back(curr);
 		cout << "thread #" << curr.tid << endl;
@@ -340,7 +340,7 @@ ThreadDescriptorBlock *MyScheduler::getThreadSRT(){
 	// Get all threads arrived before timer
 	while (!buffer.empty()) {
 		curr = buffer.top();
-		if (curr.arriving_time >= timer) break;
+		if (curr.arriving_time > timer) break;
 		buffer.pop();
 		threads_tmp.push_back(curr);
 		cout << "thread #" << curr.tid << endl;
