@@ -302,7 +302,7 @@ ThreadDescriptorBlock *MyScheduler::getHighestPriorityThread() {
 	int idx = 0;
 
 	for(int i = 0;i<threads_tmp.size();i++){
-		if (threads_tmp[i].priority > prior) {
+		if (threads_tmp[i].priority < prior) {
 			prior = threads_tmp[i].priority;
 			idx = i;
 		}
