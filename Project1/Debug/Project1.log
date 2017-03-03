@@ -1,14 +1,16 @@
-﻿  testbench.cpp
+﻿  stdafx.cpp
+  testbench.cpp
   myscheduler.cpp
-c:\users\aiyu\source\repos\threadscheduler2\project1\myscheduler.cpp(263): warning C4018: '<': signed/unsigned mismatch
-c:\users\aiyu\source\repos\threadscheduler2\project1\myscheduler.cpp(304): warning C4018: '<': signed/unsigned mismatch
-c:\users\aiyu\source\repos\threadscheduler2\project1\myscheduler.cpp(314): warning C4018: '<': signed/unsigned mismatch
-c:\users\aiyu\source\repos\threadscheduler2\project1\myscheduler.cpp(357): warning C4018: '<': signed/unsigned mismatch
-c:\users\aiyu\source\repos\threadscheduler2\project1\myscheduler.cpp(367): warning C4018: '<': signed/unsigned mismatch
-c:\users\aiyu\source\repos\threadscheduler2\project1\myscheduler.cpp(387): warning C4018: '<': signed/unsigned mismatch
-c:\users\aiyu\source\repos\threadscheduler2\project1\myscheduler.cpp(407): warning C4018: '<': signed/unsigned mismatch
-c:\users\aiyu\source\repos\threadscheduler2\project1\myscheduler.cpp(424): warning C4018: '<': signed/unsigned mismatch
+c:\users\lirex\source\repos\threadscheduler3\project1\myscheduler.cpp(263): warning C4018: '<': signed/unsigned mismatch
+c:\users\lirex\source\repos\threadscheduler3\project1\myscheduler.cpp(304): warning C4018: '<': signed/unsigned mismatch
+c:\users\lirex\source\repos\threadscheduler3\project1\myscheduler.cpp(314): warning C4018: '<': signed/unsigned mismatch
+c:\users\lirex\source\repos\threadscheduler3\project1\myscheduler.cpp(357): warning C4018: '<': signed/unsigned mismatch
+c:\users\lirex\source\repos\threadscheduler3\project1\myscheduler.cpp(367): warning C4018: '<': signed/unsigned mismatch
+c:\users\lirex\source\repos\threadscheduler3\project1\myscheduler.cpp(387): warning C4018: '<': signed/unsigned mismatch
+c:\users\lirex\source\repos\threadscheduler3\project1\myscheduler.cpp(407): warning C4018: '<': signed/unsigned mismatch
+c:\users\lirex\source\repos\threadscheduler3\project1\myscheduler.cpp(424): warning C4018: '<': signed/unsigned mismatch
   Generating Code...
-c:\users\aiyu\source\repos\threadscheduler2\project1\myscheduler.cpp(320): warning C4172: returning address of local variable or temporary: result
-c:\users\aiyu\source\repos\threadscheduler2\project1\myscheduler.cpp(373): warning C4172: returning address of local variable or temporary: result
-  Project1.vcxproj -> C:\Users\Aiyu\Source\Repos\ThreadScheduler2\Debug\Project1.exe
+c:\users\lirex\source\repos\threadscheduler3\project1\myscheduler.cpp(320): warning C4172: returning address of local variable or temporary: result
+c:\users\lirex\source\repos\threadscheduler3\project1\myscheduler.cpp(373): warning C4172: returning address of local variable or temporary: result
+  Project1.vcxproj -> C:\Users\lirex\Source\Repos\ThreadScheduler3\Debug\Project1.exe
+  Project1.vcxproj -> C:\Users\lirex\Source\Repos\ThreadScheduler3\Debug\Project1.pdb (Full PDB)

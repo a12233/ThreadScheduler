@@ -260,7 +260,7 @@ bool MyScheduler::Dispatch()
 //----------------------------------------------------------------------------------
 int MyScheduler::findNextAvailableCPU()
 {
-	for (int i = 0; i < num_cpu; i++) {
+	for (unsigned int i = 0; i < num_cpu; i++) {
 		if (CPUs[i] == NULL) {return i;}
 	}
 	// If no CPU available, return -1
