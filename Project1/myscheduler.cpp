@@ -36,43 +36,40 @@ bool MyScheduler::Dispatch()
 	{
 	case FCFS:
 	{//First Come First Serve
-		//can only fill one CPU per clk cycle 
-		int counter = 0; //variable to check if all CPUs are done executing
-		int clk = timer;
-		bool flag = false; //to check if arrival time <=timer 
-		ThreadDescriptorBlock temp;
-		while (!buffer.empty())
-		{
-			temp = buffer.top();
-			if (temp.arriving_time <= clk)
-				flag = true;
+		if (buffer.empty()) return true;
+		ThreadDescriptorBlock curr = buffer.top();
+		
+		if (curr.arriving_time > timer) {
+			return true;
+		}
 
-			for (unsigned int i = 0; i < num_cpu; i++) //find an open CPU
-			{
-				if (CPUs[i] == NULL && flag == true) {
-					CPUs[i] = new ThreadDescriptorBlock;
+		buffer.pop();
+
+
+		int nextCPU = findNextAvailableCPU();
+		if (nextCPU == -1) {
+			buffer.push(curr);
+			return true;
+		}
+		while (nextCPU != -1) {
+			CPUs[nextCPU] = new ThreadDescriptorBlock;
+			*CPUs[nextCPU] = curr;
+			nextCPU = findNextAvailableCPU();
+			if (nextCPU != -1) {
+				if (buffer.empty()) {
+					curr = buffer.top();
 					buffer.pop();
-					*CPUs[i] = temp;
-					flag = false;
+					continue;
 				}
-
+				else
+					return true;
 			}
-			return true; //return control to scheduler.h and run threads
-
+			else
+				return true;
 		}
-		for (unsigned int i = 0; i < num_cpu; i++) //only executes when buffer is empty
-		{
-			counter = 0;
-			if (CPUs[i] == NULL) {
-				counter++;
-			}
-			if (counter == num_cpu) {
-				return false;
-			}
-		}
-
 	}
 	break;
+
 	case STRFwoP:	//Shortest Time Remaining First, without preemption
 	{
 		/*
@@ -192,9 +189,10 @@ bool MyScheduler::Dispatch()
 	break;
 	case STRFwP:	//Shortest Time Remaining First, with preemption
 	{
+		while (true) {
 		//cout << "STRFwP!!!~~~~\n";
 		ThreadDescriptorBlock curr;
-
+		
 		// Get Thread with SR among threads arrived
 		ThreadDescriptorBlock *tmpPtr;
 		tmpPtr = getThreadSRT();
@@ -222,84 +220,89 @@ bool MyScheduler::Dispatch()
 			}
 			else
 				return true;
-			}
+		}
 
-			
-			//cout << "    CPU free #" << nextCPU << ": Thread " << curr.tid << endl;
-		//	return true;
+
 
 		// IF CPU not Free, check
 		//cout << "  -->No CPU Free\n";
 
 		// Find CPU with longest RT thread
-		int idx = getCPUThreadLRT();
-		int longest = CPUs[idx]->remaining_time;
-
-		// Compare thread with Longest RT  in CPU and the incoming thread
-		if (longest > curr.remaining_time) {
-			ThreadDescriptorBlock useless = *CPUs[idx];
-			buffer.push(useless);
-			CPUs[idx] = new ThreadDescriptorBlock;
-			*CPUs[idx] = curr;
-			//cout << "    STRFwP: CPU #" << idx << " switched to Thread " << curr.tid << endl;
-		}
-		else {
-			buffer.push(curr);
-		}
-}
-		break;
 		
-	case PBS:		//Priority Based Scheduling, with preemption - AC
-		{
-			//cout << "PBS\n";
-			ThreadDescriptorBlock curr;
-
-			// Get Thread with highest priority among threads arrived
-			ThreadDescriptorBlock *tmpPtr;
-			tmpPtr = getHighestPriorityThread();		
-			if (tmpPtr == nullptr) {
-				//cout << "No thread incoming" << endl;
-				return true;
-			}
-			curr  = *tmpPtr;
-			//cout << "Incoming thread: #" << curr.tid << endl;
-
-			// Set directly, if any CPU free
-			int nextCPU = findNextAvailableCPU();
-			while (nextCPU != -1) {
-				CPUs[nextCPU] = new ThreadDescriptorBlock;
-				*CPUs[nextCPU] = curr;
-				nextCPU = findNextAvailableCPU();
-				if (nextCPU != -1) {
-					tmpPtr = getThreadSRT();
-					if (tmpPtr != nullptr) {
-						curr = *tmpPtr;
-						continue;
-					}
-					else
-						return true;
-				}
-				else
-					return true;
-			}
-
-			// IF CPU not Free, check
-			//cout << "-->No CPU Free\n";
-
-			// Find CPU with lowest priority thread
-			int idx = getCPUThreadLowestPriority();
-			int lowest = CPUs[idx]->priority;
-
-			// Compare thread with lowest priority in CPU and the incoming thread
-			if (lowest > curr.priority) {
+		
+		
+			int idx = getCPUThreadLRT();
+			int longest = CPUs[idx]->remaining_time;
+			// Compare thread with Longest RT  in CPU and the incoming thread
+			if (longest > curr.remaining_time) {
 				ThreadDescriptorBlock useless = *CPUs[idx];
 				buffer.push(useless);
 				CPUs[idx] = new ThreadDescriptorBlock;
 				*CPUs[idx] = curr;
-				//cout << "    PBS: CPU #" << idx << " switched to Thread " << curr.tid << endl;
+				//cout << "    STRFwP: CPU #" << idx << " switched to Thread " << curr.tid << endl;
 			}
 			else {
 				buffer.push(curr);
+				break;
+			}
+		}
+	}
+	break;
+		
+	case PBS:		//Priority Based Scheduling, with preemption - AC
+		{
+			while (true) {
+				//cout << "PBS\n";
+				ThreadDescriptorBlock curr;
+
+				// Get Thread with highest priority among threads arrived
+				ThreadDescriptorBlock *tmpPtr;
+				tmpPtr = getHighestPriorityThread();
+				if (tmpPtr == nullptr) {
+					//cout << "No thread incoming" << endl;
+					return true;
+				}
+				curr = *tmpPtr;
+				//cout << "Incoming thread: #" << curr.tid << endl;
+
+				// Set directly, if any CPU free
+				int nextCPU = findNextAvailableCPU();
+				while (nextCPU != -1) {
+					CPUs[nextCPU] = new ThreadDescriptorBlock;
+					*CPUs[nextCPU] = curr;
+					nextCPU = findNextAvailableCPU();
+					if (nextCPU != -1) {
+						tmpPtr = getThreadSRT();
+						if (tmpPtr != nullptr) {
+							curr = *tmpPtr;
+							continue;
+						}
+						else
+							return true;
+					}
+					else
+						return true;
+				}
+
+				// IF CPU not Free, check
+				//cout << "-->No CPU Free\n";
+
+				// Find CPU with lowest priority thread
+				int idx = getCPUThreadLowestPriority();
+				int lowest = CPUs[idx]->priority;
+
+				// Compare thread with lowest priority in CPU and the incoming thread
+				if (lowest > curr.priority) {
+					ThreadDescriptorBlock useless = *CPUs[idx];
+					buffer.push(useless);
+					CPUs[idx] = new ThreadDescriptorBlock;
+					*CPUs[idx] = curr;
+					//cout << "    PBS: CPU #" << idx << " switched to Thread " << curr.tid << endl;
+				}
+				else {
+					buffer.push(curr);
+					break;
+				}
 			}
 		}
 		break;

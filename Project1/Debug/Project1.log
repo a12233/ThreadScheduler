@@ -1,2 +1,11 @@
-﻿  testbench.cpp
+﻿  myscheduler.cpp
+c:\users\aiyu\source\repos\threadscheduler2\project1\myscheduler.cpp(369): warning C4018: '<': signed/unsigned mismatch
+c:\users\aiyu\source\repos\threadscheduler2\project1\myscheduler.cpp(379): warning C4018: '<': signed/unsigned mismatch
+c:\users\aiyu\source\repos\threadscheduler2\project1\myscheduler.cpp(422): warning C4018: '<': signed/unsigned mismatch
+c:\users\aiyu\source\repos\threadscheduler2\project1\myscheduler.cpp(432): warning C4018: '<': signed/unsigned mismatch
+c:\users\aiyu\source\repos\threadscheduler2\project1\myscheduler.cpp(452): warning C4018: '<': signed/unsigned mismatch
+c:\users\aiyu\source\repos\threadscheduler2\project1\myscheduler.cpp(472): warning C4018: '<': signed/unsigned mismatch
+c:\users\aiyu\source\repos\threadscheduler2\project1\myscheduler.cpp(489): warning C4018: '<': signed/unsigned mismatch
+c:\users\aiyu\source\repos\threadscheduler2\project1\myscheduler.cpp(385): warning C4172: returning address of local variable or temporary: result
+c:\users\aiyu\source\repos\threadscheduler2\project1\myscheduler.cpp(438): warning C4172: returning address of local variable or temporary: result
   Project1.vcxproj -> C:\Users\Aiyu\Source\Repos\ThreadScheduler2\Debug\Project1.exe
