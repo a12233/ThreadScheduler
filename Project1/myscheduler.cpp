@@ -199,7 +199,7 @@ bool MyScheduler::Dispatch()
 		
 	case PBS:		//Priority Based Scheduling, with preemption - AC
 		{
-			cout << "PBS!!!~~~~\n";
+			cout << "PBS\n";
 			ThreadDescriptorBlock curr;
 
 			// Get Thread with highest priority among threads arrived
@@ -210,7 +210,7 @@ bool MyScheduler::Dispatch()
 				return true;
 			}
 			curr  = *tmpPtr;
-			cout << "    Incoming thread: #" << curr.tid << endl;
+			cout << "Incoming thread: #" << curr.tid << endl;
 
 			// Set directly, if any CPU free
 			int nextCPU = findNextAvailableCPU();
@@ -222,14 +222,14 @@ bool MyScheduler::Dispatch()
 			}
 
 			// IF CPU not Free, check
-			cout << "  -->No CPU Free\n";
+			cout << "-->No CPU Free\n";
 
 			// Find CPU with lowest priority thread
 			int idx = getCPUThreadLowestPriority();
 			int lowest = CPUs[idx]->priority;
 
 			// Compare thread with lowest priority in CPU and the incoming thread
-			if (lowest < curr.priority) {
+			if (lowest > curr.priority) {
 				ThreadDescriptorBlock useless = *CPUs[idx];
 				buffer.push(useless);
 				CPUs[idx] = new ThreadDescriptorBlock;
@@ -298,7 +298,7 @@ ThreadDescriptorBlock *MyScheduler::getHighestPriorityThread() {
 	}
 
 	// Find the thread with the highest priority
-	int prior = -1;
+	int prior = 10000000;
 	int idx = 0;
 
 	for(int i = 0;i<threads_tmp.size();i++){
@@ -382,10 +382,10 @@ ThreadDescriptorBlock *MyScheduler::getThreadSRT(){
 int MyScheduler::getCPUThreadLowestPriority() {
 	
 	int index = -1;
-	int lowest = 100;
+	int lowest = -1;
 
 	for (int i = 0; i < num_cpu; i++) {
-		if (CPUs[i]->priority < lowest) {
+		if (CPUs[i]->priority > lowest) {
 			lowest = CPUs[i]->priority;
 			index = i;
 		}
