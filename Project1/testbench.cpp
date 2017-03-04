@@ -7,7 +7,7 @@
 int main(int argc, char* argv[])
 {
 	cout << "FCFS Policy, 2 CPUs\n";
-	MyScheduler ms1 = MyScheduler(Policy::FCFS, 2);
+	MyScheduler ms1 = MyScheduler(Policy::FCFS, 3);
 	ms1.CreateThread(0, 12, 0, 0);
 	ms1.CreateThread(5, 2, 2, 1);
 	ms1.CreateThread(3, 7, 1, 2);

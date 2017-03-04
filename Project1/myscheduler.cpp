@@ -75,6 +75,7 @@ bool MyScheduler::Dispatch()
 	break;
 	case STRFwoP:	//Shortest Time Remaining First, without preemption
 	{
+		/*
 		int counter = 0; //variable to check if all CPUs are done executing
 		int tempSize = 0; //remaining threads after cpu are initalliy filled 
 		int counter1 = 0; //to count the number of cpus unused 
@@ -107,6 +108,7 @@ bool MyScheduler::Dispatch()
 			if (counterCPU == num_cpu)
 				threadControl = true;
 			return true; //give scheduler.h control, increament timer by 1
+			
 		}
 
 
@@ -150,6 +152,42 @@ bool MyScheduler::Dispatch()
 				}
 			}
 		}
+		*/
+		ThreadDescriptorBlock curr;
+
+		// Get Thread with SR among threads arrived
+		ThreadDescriptorBlock *tmpPtr;
+		tmpPtr = getThreadSRT();
+		if (tmpPtr == nullptr) {
+			//cout << "No thread incoming" << endl;
+			return true;
+		}
+		curr = *tmpPtr;
+		//cout << "    Incoming thread: #" << curr.tid << endl;
+
+		// Set directly, if any CPU free
+		int nextCPU = findNextAvailableCPU();
+		if (nextCPU == -1) {
+			buffer.push(curr);
+			return true;
+		}
+		while (nextCPU != -1) {
+			CPUs[nextCPU] = new ThreadDescriptorBlock;
+			*CPUs[nextCPU] = curr;
+			nextCPU = findNextAvailableCPU();
+			if (nextCPU != -1) {
+				tmpPtr = getThreadSRT();
+				if (tmpPtr != nullptr) {
+					curr = *tmpPtr;
+					continue;
+				}
+				else
+					return true;
+			}
+			else
+				return true;
+		}
+
 	}
 	break;
 	case STRFwP:	//Shortest Time Remaining First, with preemption
