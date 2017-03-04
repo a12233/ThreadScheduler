@@ -36,37 +36,25 @@ bool MyScheduler::Dispatch()
 	{
 	case FCFS:
 	{//First Come First Serve
-		if (buffer.empty()) return true;
-		ThreadDescriptorBlock curr = buffer.top();
-		
-		if (curr.arriving_time > timer) {
-			return true;
-		}
+		while (true) {
+			if (buffer.empty()) return true;
 
-		buffer.pop();
+			ThreadDescriptorBlock curr = buffer.top();
+
+			if (curr.arriving_time > timer) return true;
+
+			buffer.pop();
 
 
-		int nextCPU = findNextAvailableCPU();
-		if (nextCPU == -1) {
-			buffer.push(curr);
-			return true;
-		}
-		while (nextCPU != -1) {
+			int nextCPU = findNextAvailableCPU();
+			if (nextCPU == -1) {
+				buffer.push(curr);
+				return true;
+			}
 			CPUs[nextCPU] = new ThreadDescriptorBlock;
 			*CPUs[nextCPU] = curr;
-			nextCPU = findNextAvailableCPU();
-			if (nextCPU != -1) {
-				if (buffer.empty()) {
-					curr = buffer.top();
-					buffer.pop();
-					continue;
-				}
-				else
-					return true;
-			}
-			else
-				return true;
 		}
+	
 	}
 	break;
 
@@ -150,39 +138,29 @@ bool MyScheduler::Dispatch()
 			}
 		}
 		*/
-		ThreadDescriptorBlock curr;
+		while (true) {
+			ThreadDescriptorBlock curr;
 
-		// Get Thread with SR among threads arrived
-		ThreadDescriptorBlock *tmpPtr;
-		tmpPtr = getThreadSRT();
-		if (tmpPtr == nullptr) {
-			//cout << "No thread incoming" << endl;
-			return true;
-		}
-		curr = *tmpPtr;
-		//cout << "    Incoming thread: #" << curr.tid << endl;
-
-		// Set directly, if any CPU free
-		int nextCPU = findNextAvailableCPU();
-		if (nextCPU == -1) {
-			buffer.push(curr);
-			return true;
-		}
-		while (nextCPU != -1) {
-			CPUs[nextCPU] = new ThreadDescriptorBlock;
-			*CPUs[nextCPU] = curr;
-			nextCPU = findNextAvailableCPU();
-			if (nextCPU != -1) {
-				tmpPtr = getThreadSRT();
-				if (tmpPtr != nullptr) {
-					curr = *tmpPtr;
-					continue;
-				}
-				else
-					return true;
-			}
-			else
+			// Get Thread with SR among threads arrived
+			ThreadDescriptorBlock *tmpPtr;
+			tmpPtr = getThreadSRT();
+			if (tmpPtr == nullptr) {
+				//cout << "No thread incoming" << endl;
 				return true;
+			}
+			curr = *tmpPtr;
+			//cout << "    Incoming thread: #" << curr.tid << endl;
+
+			// Set directly, if any CPU free
+			int nextCPU = findNextAvailableCPU();
+			if (nextCPU == -1) {
+				buffer.push(curr);
+				return true;
+			}
+			if (nextCPU != -1) {
+				CPUs[nextCPU] = new ThreadDescriptorBlock;
+				*CPUs[nextCPU] = curr;
+			}
 		}
 
 	}
